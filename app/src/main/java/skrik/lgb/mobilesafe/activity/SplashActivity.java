@@ -104,11 +104,22 @@ public class SplashActivity extends Activity {
                 downLoadAPK();
             }
         });
+
         builder.setNegativeButton("稍后再说", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 //取消对话框,进入主界面
                 enterHome();
+            }
+        });
+
+        //点击取消事件监听
+        builder.setOnCancelListener(new DialogInterface.OnCancelListener() {
+            @Override
+            public void onCancel(DialogInterface dialog) {
+                //即使用户点击取消,也需要让其进入应用程序主界面
+                enterHome();
+                dialog.dismiss();
             }
         });
         builder.show();
@@ -177,8 +188,17 @@ public class SplashActivity extends Activity {
         intent.addCategory("android.intent.category.DEFAULT");
 
         intent.setDataAndType(Uri.fromFile(file), "application/vnd.android.package-archive");
-        startActivity(intent);
-        finish();
+//        startActivity(intent);
+//        finish();
+        startActivityForResult(intent,0);  //设置点击取消，返回主界面，系统默认是退出程序
+
+    }
+
+    //开启一个activity后,返回结果调用的方法
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        enterHome();
+        super.onActivityResult(requestCode, resultCode, data);
     }
 
     /**
