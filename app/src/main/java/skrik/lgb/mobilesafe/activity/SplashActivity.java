@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
+import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
@@ -131,6 +132,8 @@ public class SplashActivity extends Activity {
                     //下载成功(下载过后的放置在sd卡中apk)
                     Log.i("下载情况","下载成功");
                     File file = responseInfo.result;
+                    //提示用户安装
+                    installAPK(file);
                 }
 
                 @Override
@@ -158,6 +161,24 @@ public class SplashActivity extends Activity {
 
         }
 
+    }
+
+    /**
+     * 安装对应apk
+     * @param file 	安装文件
+     */
+    protected void installAPK(File file) {
+        //系统应用界面,源码,安装apk入口
+        //调用系统的安装方法
+//        Intent intent=new Intent();
+//        intent.setAction(intent.ACTION_VIEW);
+
+        Intent intent = new Intent("android.intent.action.VIEW");
+        intent.addCategory("android.intent.category.DEFAULT");
+
+        intent.setDataAndType(Uri.fromFile(file), "application/vnd.android.package-archive");
+        startActivity(intent);
+        finish();
     }
 
     /**
