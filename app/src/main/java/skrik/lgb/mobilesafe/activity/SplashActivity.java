@@ -8,14 +8,21 @@ import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.widget.TextView;
 
+import com.lidroid.xutils.HttpUtils;
+import com.lidroid.xutils.exception.HttpException;
+import com.lidroid.xutils.http.ResponseInfo;
+import com.lidroid.xutils.http.callback.RequestCallBack;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -75,6 +82,7 @@ public class SplashActivity extends Activity {
         }
     };
     private String mVersionDes;
+    private String mDownloadUrl;
 
     /**
      * 弹出对话框,提示用户更新
@@ -92,6 +100,7 @@ public class SplashActivity extends Activity {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 //下载apk,apk链接地址,downloadUrl
+                downLoadAPK();
             }
         });
         builder.setNegativeButton("稍后再说", new DialogInterface.OnClickListener() {
@@ -102,6 +111,53 @@ public class SplashActivity extends Activity {
             }
         });
         builder.show();
+    }
+
+    /**
+     * 使用xutils下载apk
+     */
+    protected void downLoadAPK() {
+        //apk下载链接地址,放置apk的所在路径
+        //1,判断sd卡是否可用,是否挂在上
+        if (Environment.getExternalStorageState().equals(Environment.MEDIA_MOUNTED)){
+            //2,获取sd路径
+          String path =  Environment.getExternalStorageDirectory().getAbsolutePath()+ File.separator+"mobilesafe.apk";
+            //3,发送请求,获取apk,并且放置到指定路径
+            HttpUtils httpUtils = new HttpUtils();
+            //4,发送请求,传递参数(下载地址,下载应用放置位置)
+            httpUtils.download(mDownloadUrl, path, new RequestCallBack<File>() {
+                @Override
+                public void onSuccess(ResponseInfo<File> responseInfo) {
+                    //下载成功(下载过后的放置在sd卡中apk)
+                    Log.i("下载情况","下载成功");
+                    File file = responseInfo.result;
+                }
+
+                @Override
+                public void onFailure(HttpException e, String s) {
+                    //下载失败
+                    Log.i("下载情况","下载失败");
+                }
+
+                //刚刚开始下载方法
+                @Override
+                public void onStart() {
+                    Log.i("下载情况","刚刚开始下载");
+                    super.onStart();
+                }
+
+                //下载过程中的方法(下载apk总大小,当前的下载位置,是否正在下载)
+                @Override
+                public void onLoading(long total, long current, boolean isUploading) {
+                    Log.i("下载情况","下载中..............");
+                    Log.i("下载情况","total="+total);
+                    Log.i("下载情况","current"+current);
+                    super.onLoading(total, current, isUploading);
+                }
+            });
+
+        }
+
     }
 
     /**
@@ -184,12 +240,12 @@ public class SplashActivity extends Activity {
                         String versionName = jsonObject.getString("versionName");
                         mVersionDes = jsonObject.getString("versionDes");
                         String versionCode = jsonObject.getString("versionCode");
-                        String downloadUrl = jsonObject.getString("downloadUrl");
+                        mDownloadUrl = jsonObject.getString("downloadUrl");
                         //日志打印
                         Log.i(tag,versionName);
                         Log.i(tag, mVersionDes);
                         Log.i(tag,versionCode);
-                        Log.i(tag,downloadUrl);
+                        Log.i(tag, mDownloadUrl);
                         //8,比对版本号(服务器版本号>本地版本号,提示用户更新)
                         if (mLocalVersionCode < Integer.parseInt(versionCode)){
                             //提示用户更新,弹出对话框(UI),消息机制
