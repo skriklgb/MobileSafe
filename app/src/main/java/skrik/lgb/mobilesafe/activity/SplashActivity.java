@@ -8,6 +8,9 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.TextView;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -84,10 +87,25 @@ public class SplashActivity extends Activity {
                         //6,将流转换成字符串(工具类封装)
                       String json =   StreamUtils.StreamToString(is);
                         Log.i(tag,json);
+                        //7,json解析
+                        JSONObject jsonObject = new JSONObject(json);
+                        //debug调试,解决问题
+                        String versionName = jsonObject.getString("versionName");
+                        String versionDes = jsonObject.getString("versionDes");
+                        String versionCode = jsonObject.getString("versionCode");
+                        String downloadUrl = jsonObject.getString("downloadUrl");
+                        //日志打印
+                        Log.i(tag,versionName);
+                        Log.i(tag,versionDes);
+                        Log.i(tag,versionCode);
+                        Log.i(tag,downloadUrl);
+
                     }
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
                 } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (JSONException e) {
                     e.printStackTrace();
                 }
 
