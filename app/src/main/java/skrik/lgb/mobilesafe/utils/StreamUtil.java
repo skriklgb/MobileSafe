@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 
 
-public class StreamUtils {
+public class StreamUtil {
     /**
      * 流转换成字符串
      * @param is	流对象

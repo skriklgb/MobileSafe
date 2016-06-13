@@ -1,7 +1,9 @@
 package skrik.lgb.mobilesafe.activity;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
@@ -21,7 +23,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import skrik.lgb.mobilesafe.R;
-import skrik.lgb.mobilesafe.utils.StreamUtils;
+import skrik.lgb.mobilesafe.utils.StreamUtil;
+import skrik.lgb.mobilesafe.utils.ToastUtil;
 
 public class SplashActivity extends Activity {
    protected static final String tag = "SplashActivity ";
@@ -46,19 +49,23 @@ public class SplashActivity extends Activity {
         switch (msg.what){
              case UPDATE_VERSION:
                  //弹出对话框,提示用户更新
+                showUpdateDialog();
                  break;
              case ENTER_HOME:
                  //进入应用程序主界面,activity跳转过程
                  enterHome();
                  break;
              case URL_ERROR:
-
+                 ToastUtil.show(mContext,"url异常");
+                 enterHome();
                  break;
              case IO_ERROR:
-
+                 ToastUtil.show(mContext,"读取异常");
+                 enterHome();
                  break;
              case JSON_ERROR:
-
+                 ToastUtil.show(mContext,"JSON解析异常");
+                 enterHome();
                  break;
 
              default:
@@ -67,11 +74,40 @@ public class SplashActivity extends Activity {
 
         }
     };
+    private String mVersionDes;
+
+    /**
+     * 弹出对话框,提示用户更新
+     */
+    protected void showUpdateDialog() {
+        //对话框,是依赖于activity存在的
+        AlertDialog.Builder builder = new AlertDialog.Builder(mContext);
+        //设置左上角图标
+        builder.setIcon(R.drawable.dialog_logo);
+        builder.setTitle("版本更新");
+        //设置描述内容
+        builder.setMessage(mVersionDes);
+        //积极按钮,立即更新
+        builder.setPositiveButton("立即更新", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //下载apk,apk链接地址,downloadUrl
+            }
+        });
+        builder.setNegativeButton("稍后再说", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                //取消对话框,进入主界面
+                enterHome();
+            }
+        });
+        builder.show();
+    }
 
     /**
      * 进入应用程序主界面
      */
-    private void enterHome() {
+    protected void enterHome() {
         Intent intent = new Intent(mContext, HomeActivity.class);
         startActivity(intent);
         //在开启一个新的界面后，将导航界面关闭（导航界面只可见一次）
@@ -140,18 +176,18 @@ public class SplashActivity extends Activity {
                           //5,以流的形式,将数据获取下来
                         InputStream is = connection.getInputStream();
                         //6,将流转换成字符串(工具类封装)
-                      String json =   StreamUtils.StreamToString(is);
+                      String json =   StreamUtil.StreamToString(is);
                         Log.i(tag,json);
                         //7,json解析
                         JSONObject jsonObject = new JSONObject(json);
                         //debug调试,解决问题
                         String versionName = jsonObject.getString("versionName");
-                        String versionDes = jsonObject.getString("versionDes");
+                        mVersionDes = jsonObject.getString("versionDes");
                         String versionCode = jsonObject.getString("versionCode");
                         String downloadUrl = jsonObject.getString("downloadUrl");
                         //日志打印
                         Log.i(tag,versionName);
-                        Log.i(tag,versionDes);
+                        Log.i(tag, mVersionDes);
                         Log.i(tag,versionCode);
                         Log.i(tag,downloadUrl);
                         //8,比对版本号(服务器版本号>本地版本号,提示用户更新)
