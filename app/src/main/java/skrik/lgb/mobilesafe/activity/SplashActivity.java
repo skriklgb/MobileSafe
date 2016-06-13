@@ -2,9 +2,12 @@ package skrik.lgb.mobilesafe.activity;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.widget.TextView;
 
@@ -22,9 +25,59 @@ import skrik.lgb.mobilesafe.utils.StreamUtils;
 
 public class SplashActivity extends Activity {
    protected static final String tag = "SplashActivity ";
+
+    /*** 更新新版本的状态码*/
+    private static final int UPDATE_VERSION =100 ;
+    /*** 进入应用程序主界面状态码*/
+    private static final int ENTER_HOME =101 ;
+    /*** 出错状态码*/
+    private static final int URL_ERROR = 102;
+    private static final int IO_ERROR =103 ;
+    private static final int JSON_ERROR =104 ;
+
     private TextView mTvVersionName;
     private int mLocalVersionCode;
     private Context mContext;
+
+    private  Handler mHandler = new Handler(){
+
+        @Override
+        public void handleMessage(Message msg) {
+        switch (msg.what){
+             case UPDATE_VERSION:
+                 //弹出对话框,提示用户更新
+                 break;
+             case ENTER_HOME:
+                 //进入应用程序主界面,activity跳转过程
+                 enterHome();
+                 break;
+             case URL_ERROR:
+
+                 break;
+             case IO_ERROR:
+
+                 break;
+             case JSON_ERROR:
+
+                 break;
+
+             default:
+                 break;
+             }
+
+        }
+    };
+
+    /**
+     * 进入应用程序主界面
+     */
+    private void enterHome() {
+        Intent intent = new Intent(mContext, HomeActivity.class);
+        startActivity(intent);
+        //在开启一个新的界面后，将导航界面关闭（导航界面只可见一次）
+//        Log.i("test","sucesss");
+        finish();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +121,8 @@ public class SplashActivity extends Activity {
                 //发送请求获取数据,参数则为请求json的链接地址
                 //http://192.168.13.99:8080/update74.json	测试阶段不是最优
                 //仅限于模拟器访问电脑tomcat
+                Message msg = Message.obtain();
+                long startTime = System.currentTimeMillis();
                 try {
                     //1,封装url地址
                        URL url = new URL("http://192.168.1.200:8080/update.json");
@@ -99,14 +154,37 @@ public class SplashActivity extends Activity {
                         Log.i(tag,versionDes);
                         Log.i(tag,versionCode);
                         Log.i(tag,downloadUrl);
+                        //8,比对版本号(服务器版本号>本地版本号,提示用户更新)
+                        if (mLocalVersionCode < Integer.parseInt(versionCode)){
+                            //提示用户更新,弹出对话框(UI),消息机制
+                            msg.what = UPDATE_VERSION;
+                        }else {
+                            //进入应用程序主界面
+                            msg.what = ENTER_HOME;
+                        }
 
                     }
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
+                    msg.what = URL_ERROR;
                 } catch (IOException e) {
                     e.printStackTrace();
+                    msg.what = IO_ERROR;
                 } catch (JSONException e) {
                     e.printStackTrace();
+                    msg.what = JSON_ERROR;
+                }finally {
+                    //指定睡眠时间,请求网络的时长超过4秒则不做处理
+                    //请求网络的时长小于4秒,强制让其睡眠满4秒钟
+                    long endTime = System.currentTimeMillis();
+                    if (endTime-startTime<4000){
+                        try {
+                            Thread.sleep(4000-(endTime-startTime));
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    mHandler.sendMessage(msg);
                 }
 
 
