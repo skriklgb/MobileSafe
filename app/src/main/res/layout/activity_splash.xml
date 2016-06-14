@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/launcher_bg"
+    android:id="@+id/rl_splash_root"
     tools:context="skrik.lgb.mobilesafe.activity.SplashActivity">
 
     <TextView

@@ -13,6 +13,8 @@ import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.view.animation.AlphaAnimation;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.lidroid.xutils.HttpUtils;
@@ -46,7 +48,7 @@ public class SplashActivity extends Activity {
     private static final int IO_ERROR =103 ;
     private static final int JSON_ERROR =104 ;
 
-    private TextView mTvVersionName;
+    private TextView mTv_splash_version;
     private int mLocalVersionCode;
     private Context mContext;
 
@@ -84,6 +86,7 @@ public class SplashActivity extends Activity {
     };
     private String mVersionDes;
     private String mDownloadUrl;
+    private RelativeLayout mRl_splash_root;
 
     /**
      * 弹出对话框,提示用户更新
@@ -219,7 +222,17 @@ public class SplashActivity extends Activity {
         mContext = this;
         initUI();  //初始化UI
         initData();//初始化数据
+        initAnimation();//初始化动画
 
+    }
+
+    /**
+     * 初始化动画
+     */
+    private void initAnimation() {
+        AlphaAnimation alphaAnimation = new AlphaAnimation(0, 1);
+        alphaAnimation.setDuration(3000);
+        mRl_splash_root.startAnimation(alphaAnimation);
     }
 
     /**
@@ -227,7 +240,7 @@ public class SplashActivity extends Activity {
      */
     private void initData() {
         //1.应用版本名称.
-        mTvVersionName.setText("版本名称:"+getVersionName());
+        mTv_splash_version.setText("版本名称:"+getVersionName());
         //检测(本地版本号和服务器版本号比对)是否有更新,如果有更新,提示用户下载(member)
         //2,获取本地版本号
         mLocalVersionCode = getVersionCode();
@@ -376,6 +389,7 @@ public class SplashActivity extends Activity {
      * 初始化UI方法
      */
     private void initUI() {
-        mTvVersionName = (TextView) findViewById(R.id.tv_splash_version);
+        mTv_splash_version = (TextView) findViewById(R.id.tv_splash_version);
+        mRl_splash_root = (RelativeLayout) findViewById(R.id.rl_splash_root);
     }
 }
