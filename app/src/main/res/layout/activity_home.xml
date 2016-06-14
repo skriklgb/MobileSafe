@@ -38,4 +38,13 @@
 
     </skrik.lgb.mobilesafe.view.FocusTextView>
 
+    <!--android:numColumns指定列数  -->
+    <!-- android:verticalSpacing="10dp"指定内部条目竖直方向间距为10dp -->
+    <GridView
+        android:layout_width="match_parent"
+        android:id="@+id/gv_home"
+        android:numColumns="3"
+        android:verticalSpacing="30dp"
+        android:layout_height="match_parent"></GridView>
+
 </LinearLayout>
