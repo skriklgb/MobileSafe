@@ -344,3 +344,133 @@
 	        android:textSize="16sp"
 	        android:textColor="#000000"
 	        android:text="我是您的手机安全卫士, 我会时刻保护您手机的安全! 啊哈哈哈哈" />
+
+
+
+
+
+1,SplashActivity
+	版本名称的展示,从清单配置文件中获取版本名称,PackageManager
+	服务端新版本的检测(本地版本号<服务器版本号)
+	展示logo
+
+2,手机防盗
+	sim卡绑定:每一款手机都会有相应的卡的序列号,一旦替换掉原有电话卡,序列号会发生改变
+
+3,手机卫士分包
+	基础课程分包方式,每一个类包名,
+	com.itheima.db
+	com.itheima.db.dao 组件方式
+
+
+	业务逻辑划分包名
+		icbc
+
+		com.icbc.money
+		com.icbc.meeting
+		com.icbc.travel
+
+	组件划分(四大组件:activity,服务,广播,内容提供者(内容解析者))
+
+		mobilesafe
+
+		com.itheima.mobilesafe.activity
+		com.itheima.mobilesafe.service
+
+
+		数据库操作
+		com.itheima.mobilesafe.db
+		com.itheima.mobilesafe.db.dao
+
+		工具类
+		com.itheima.mobilesafe.utils
+
+		自定义控件(android原有控件,不能满足需求),自定义组合控件
+		com.itheima.mobilesafe.view
+		com.itheima.mobilesafe.ui.widget
+
+4,svn账号密码
+	创建代码仓库
+	分配用户权限
+
+	https://192.168.13.99/svn/heima74/
+	账号:all
+	密码:123456
+	只读
+
+	提交工程步骤,将.svn拷贝到工程同级目录下
+	然后点击add选项(自动编译生成的文件不需要(不能)提交),
+	后续再点击commit选项,在点击完commit服务才会有相应代码
+
+5,应用去头
+	方式一:每个类都需要去添加此代码
+		在setContentView(R.layout.activity_splash);
+		前设置以下代码
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
+
+	方式二:统一去掉所有activity的头
+
+	  @android:style/Theme.Light.NoTitleBar方式去头,使用老版本主题样式
+		修改默认样式文件为
+	    <style name="AppTheme" parent="AppBaseTheme">
+		<!-- 在去头的同时,还保留高版本的样式主题 -->
+		<item name="android:windowNoTitle">true</item>
+	    </style>
+
+6,packageManager获取当前应用版本名称,版本号
+	版本名称:用于展示(阴影效果,颜色)
+
+	版本号:用于和服务端的apk比对,
+
+		如果服务器端的版本号>本地版本号 弹出对话框提示用户更新
+		服务器版本号<=本地版本号	直接进入应用程序主界面
+
+7,网络请求发送
+	客户端发送请求
+	服务端以流的形式返回数据,数据需转换成字符串,(json)
+8,json解析
+	看见什么解析什么,解析相应字段的时候,一定要去copy不要手写
+9,json解析异常情况
+	json一旦解析出现错误,通过断点调试是最好的调错方式
+	断点调试常用按钮:
+		绿色:跳转到下一个断点
+		红色:断开本次断点调试
+		下一步:执行当前代码,执行到下一步
+		跳转到方法内部执行
+10,xutils使用过程
+	1,导入xutils的jar包
+	2,添加xutils需要使用的权限
+	<uses-permission android:name="android.permission.INTERNET" />
+	<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+	3,获取HttpUtils对象,下载指定链接地址的apk
+	4,HttpUtils对象调用download(下载链接地址,下载后放置文件的路径,下载过程中方法的回调
+		onStart()
+		onloading()
+		onSuccesd()
+		onFail() )
+	5,下载apk后的安装过程,
+11,打包生成apk过程
+	1,生成签名文件,并且指定所在位置
+	2,使用生成的签名文件,给工程打包生成一个apk
+12,安装apk注意事项
+	升级
+	1,注意事项:将原有应用覆盖掉,包名一致
+
+	2,签名一致???
+	从Eclipse运行至手机上的应用,使用的是bin目录下的应用,使用debug.keystore签名应用
+
+	手机卫士版本一,右键运行至手机的,所以使用签名是debug.keystore
+	手机卫士版本二,单独打包,生成相应签名文件heima74keystore
+
+	生成一个heima74keystore作为签名文件的apk
+
+
+	签名一致,包名不同:生成两个手机卫士apk,包名是应用的唯一性标志
+	签名不同,包名一致:覆盖安装失败
+
+	1.0	keyStore
+	2.0
+
+	keyStore+密码妥善保存,svn服务器
+
+	
