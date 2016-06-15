@@ -13,12 +13,10 @@
 
     <!-- 将以下的相对布局,抽取到单独的一个类中去做管理,以后只需要在布局文件中添加此类,即可达到以下效果-->
 <skrik.lgb.mobilesafe.view.SettingItemView
+    android:id="@+id/siv_update"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 </skrik.lgb.mobilesafe.view.SettingItemView>
 
-    <skrik.lgb.mobilesafe.view.SettingItemView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-    </skrik.lgb.mobilesafe.view.SettingItemView>
+
 </LinearLayout>
