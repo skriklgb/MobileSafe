@@ -33,6 +33,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 
 import skrik.lgb.mobilesafe.R;
+import skrik.lgb.mobilesafe.utils.ConstantValue;
+import skrik.lgb.mobilesafe.utils.SpUtil;
 import skrik.lgb.mobilesafe.utils.StreamUtil;
 import skrik.lgb.mobilesafe.utils.ToastUtil;
 
@@ -253,7 +255,18 @@ public class SplashActivity extends Activity {
 		 * 新版本的描述信息
 		 * 服务器版本号
 		 * 新版本apk下载地址*/
-        checkVersion();
+
+        if (SpUtil.getBoolean(this, ConstantValue.OPEN_UPDATE,false)) {
+            checkVersion();
+        } else {
+            //直接进入应用程序主界面
+            //			enterHome();
+            //消息机制
+            //			mHandler.sendMessageDelayed(msg, 4000);
+            //在发送消息4秒后去处理,ENTER_HOME状态码指向的消息
+            mHandler.sendEmptyMessageDelayed(ENTER_HOME,4000);
+
+        }
 
     }
 
