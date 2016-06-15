@@ -29,9 +29,16 @@
             android:textSize="18sp"
             android:textColor="@color/black"/>
 
+        <!-- android:clickable="false"
+    android:focusable="false"
+    android:focusableInTouchMode="false"
+                      让当前的 CheckBox不能被点击,即不能响应事件-->
         <CheckBox
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:clickable="false"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
             android:id="@+id/cb_setting_box"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"/>
