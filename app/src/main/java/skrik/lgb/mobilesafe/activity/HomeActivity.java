@@ -1,9 +1,11 @@
 package skrik.lgb.mobilesafe.activity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
@@ -40,7 +42,25 @@ public class HomeActivity extends Activity {
           };
         //九宫格控件设置数据适配器(等同ListView数据适配器)
         mGv_home.setAdapter(new MyAdapter());
+        //注册九宫格单个条目点击事件
+        mGv_home.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            //点中列表条目索引position
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+               switch (position){
+                    case 0:
+                        break;
+                    case 8:
+                       //开启通信卫士模块
+                        Intent intent =  new Intent(getApplicationContext(),SettingActivity.class);
+                        startActivity(intent);
+                     default:
+                        break;
+                    } 
+            }
+        });
     }
+
 
     class MyAdapter extends BaseAdapter{
 
