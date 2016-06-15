@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.view.View;
 
 import skrik.lgb.mobilesafe.R;
+import skrik.lgb.mobilesafe.utils.ConstantValue;
+import skrik.lgb.mobilesafe.utils.SpUtil;
 import skrik.lgb.mobilesafe.view.SettingItemView;
 
 public class SettingActivity extends Activity {
@@ -17,8 +19,16 @@ public class SettingActivity extends Activity {
         initUpdate();
     }
 
+    /**
+     * 版本更新开关
+     */
     private void initUpdate() {
         final SettingItemView siv_update  = (SettingItemView) findViewById(R.id.siv_update);
+
+        //获取已有的开关状态,用作显示
+       boolean open_update = SpUtil.getBoolean(this, ConstantValue.OPEN_UPDATE,false);
+        //是否选中,根据上一次存储的结果去做决定
+        siv_update.setCheck(open_update);
         siv_update.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -28,6 +38,8 @@ public class SettingActivity extends Activity {
                boolean isCheck = siv_update.isCheck();
                 //将原有状态取反,等同上诉的两部操作
                 siv_update.setCheck(!isCheck);
+                //将取反后的状态存储到相应sp中
+                SpUtil.putBoolean(getApplicationContext(),ConstantValue.OPEN_UPDATE,!isCheck);
             }
         });
     }
