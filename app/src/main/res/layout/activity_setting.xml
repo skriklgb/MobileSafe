@@ -13,10 +13,23 @@
 
     <!-- 将以下的相对布局,抽取到单独的一个类中去做管理,以后只需要在布局文件中添加此类,即可达到以下效果-->
 <skrik.lgb.mobilesafe.view.SettingItemView
+    xmlns:mobilesafe="http://schemas.android.com/apk/res/skrik.lgb.mobilesafe"
     android:id="@+id/siv_update"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    mobilesafe:destitle = "自动更新设置"
+    mobilesafe:deson = "自动更新已开启"
+    mobilesafe:desoff = "自动更新已关闭">
 </skrik.lgb.mobilesafe.view.SettingItemView>
 
+    <skrik.lgb.mobilesafe.view.SettingItemView
+        xmlns:mobilesafe="http://schemas.android.com/apk/res/skrik.lgb.mobilesafe"
+        android:id="@+id/siv_address"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        mobilesafe:destitle="电话归属地的显示设置"
+        mobilesafe:desoff="归属地的显示已关闭"
+        mobilesafe:deson="归属地的显示已开启">
+    </skrik.lgb.mobilesafe.view.SettingItemView>
 
 </LinearLayout>

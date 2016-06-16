@@ -2,6 +2,7 @@ package skrik.lgb.mobilesafe.view;
 
 import android.content.Context;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.RelativeLayout;
@@ -11,8 +12,13 @@ import skrik.lgb.mobilesafe.R;
 
 public class SettingItemView extends RelativeLayout {
 
+    public static final String NAMESPACE = "http://schemas.android.com/apk/res/skrik.lgb.mobilesafe";
     private CheckBox mCb_setting_box;
     private TextView mTv_setting_des;
+    private static final String tag = "SettingItemView";
+    private String mDestitle;
+    private String mDeson;
+    private String mDesoff;
 
     public SettingItemView(Context context) {
         this(context,null);
@@ -32,6 +38,36 @@ public class SettingItemView extends RelativeLayout {
         TextView  tv_setting_titile  = (TextView) findViewById(R.id.tv_setting_titile);
         mTv_setting_des = (TextView) findViewById(R.id.tv_setting_des);
         mCb_setting_box = (CheckBox) findViewById(R.id.cb_setting_box);
+
+        //获取自定义以及原生属性的操作,写在此处,AttributeSet attrs对象中获取
+        initAttrs(attrs);
+
+        //获取布局文件中定义的字符串,赋值给自定义组合控件的标题
+        tv_setting_titile.setText(mDestitle);
+    }
+
+    /**
+     * 返回属性集合中自定义属性属性值
+     * @param attrs	构造方法中维护好的属性集合
+     */
+    private void initAttrs(AttributeSet attrs) {
+        //获取属性的总个数
+        Log.i(tag,"attrs.getAttributeCount() ="+attrs.getAttributeCount());
+        //获取属性名称以及属性值
+//        for (int i=0;i<attrs.getAttributeCount();i++) {
+//
+//            Log.i(tag,"name="+attrs.getAttributeName(i));
+//            Log.i(tag,"Value="+attrs.getAttributeValue(i));
+//            Log.i(tag,"分割线 =================================");
+//        }
+        //通过名空间+属性名称获取属性值
+        mDestitle = attrs.getAttributeValue(NAMESPACE, "destitle");
+        mDeson = attrs.getAttributeValue(NAMESPACE, "deson");
+        mDesoff = attrs.getAttributeValue(NAMESPACE, "desoff");
+
+        Log.i(tag, mDestitle);
+        Log.i(tag, mDeson);
+        Log.i(tag, mDesoff);
     }
 
     /**
@@ -51,9 +87,9 @@ public class SettingItemView extends RelativeLayout {
         //当前条目在选择的过程中,mCb_setting_box选中状态也在跟随(isCheck)变化
             mCb_setting_box.setChecked(isCheck);
         if (isCheck){
-            mTv_setting_des.setText("自动更新已开启");
+            mTv_setting_des.setText(mDeson);
         } else {
-            mTv_setting_des.setText("自动更新已关闭");
+            mTv_setting_des.setText(mDesoff);
         }
     }
 
