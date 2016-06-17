@@ -72,7 +72,7 @@ public class HomeActivity extends Activity {
 
     protected void showDialog() {
         //判断本地是否有存储密码(sp	字符串)
-       String psd = SpUtil.getString(this, ConstantValue.MOBLIE_SAFE_KEY,null);
+       String psd = SpUtil.getString(this, ConstantValue.MOBILE_SAFE_PSD,null);
         if (TextUtils.isEmpty(psd)) {
             //1,初始设置密码对话框
             showSetPsdDialog();
@@ -86,6 +86,49 @@ public class HomeActivity extends Activity {
     }
 
     private void showConfirmPsdDialog() {
+        //因为需要去自己定义对话框的展示样式,所以需要调用dialog.setView(view);
+        //view是由自己编写的xml转换成的view对象xml----->view
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        final AlertDialog dialog = builder.create();
+        final View view = View.inflate(this,R.layout.dialog_confirm_psd,null);//在内部类使用加final
+        //让对话框显示一个自己定义的对话框界面效果
+        dialog.setView(view);
+        dialog.show();
+
+        Button bt_safe_submmit  = (Button) view.findViewById(R.id.bt_safe_submmit);
+        Button bt_safe_cancel  = (Button) view.findViewById(R.id.bt_safe_cancel);
+        bt_safe_submmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EditText et_confirm_pwd = (EditText) view.findViewById(R.id.et_confirm_pwd);
+
+                String confirmPsd = et_confirm_pwd.getText().toString();
+
+                if ( !TextUtils.isEmpty(confirmPsd)) {
+                 String pwd =   SpUtil.getString(getApplicationContext(),ConstantValue.MOBILE_SAFE_PSD,"");
+                    if (pwd.equals(confirmPsd)) {
+                        //进入应用手机防盗模块,开启一个新的activity
+                        Intent intent =   new Intent(getApplicationContext(),TestActivity.class);
+                        startActivity(intent);
+                        //跳转到新的界面以后需要去隐藏对话框
+                        dialog.dismiss();
+
+                    } else {
+                        ToastUtil.show(getApplicationContext(),"确认密码错误");
+                    }
+                } else {
+                    //提示用户密码输入有为空的情况
+                    ToastUtil.show(getApplicationContext(),"请输入密码");
+                }
+            }
+        });
+
+        bt_safe_cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
 
     }
 
@@ -117,6 +160,8 @@ public class HomeActivity extends Activity {
                         startActivity(intent);
                         //跳转到新的界面以后需要去隐藏对话框
                         dialog.dismiss();
+
+                        SpUtil.putString(getApplicationContext(),ConstantValue.MOBILE_SAFE_PSD,pwd);
 
                     } else {
                         ToastUtil.show(getApplicationContext(),"确认密码错误");
