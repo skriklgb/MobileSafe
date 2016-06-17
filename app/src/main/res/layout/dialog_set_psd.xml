@@ -10,12 +10,14 @@
         android:text="设置密码"/>
 
     <EditText
+        android:inputType="textPassword"
         android:id="@+id/et_set_pwd"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="请输入密码"/>
 
     <EditText
+        android:inputType="textPassword"
         android:id="@+id/et_confirm_pwd"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -25,13 +27,13 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <Button
-            android:id="@+id/bt_submmit"
+            android:id="@+id/bt_safe_submmit"
             android:text="确认"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"/>
         <Button
-            android:id="@+id/bt_cancel"
+            android:id="@+id/bt_safe_cancel"
             android:text="取消"
             android:layout_width="0dp"
             android:layout_weight="1"

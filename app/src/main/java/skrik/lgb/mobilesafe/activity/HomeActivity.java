@@ -9,6 +9,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.Button;
+import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -16,6 +18,7 @@ import android.widget.TextView;
 import skrik.lgb.mobilesafe.R;
 import skrik.lgb.mobilesafe.utils.ConstantValue;
 import skrik.lgb.mobilesafe.utils.SpUtil;
+import skrik.lgb.mobilesafe.utils.ToastUtil;
 
 public class HomeActivity extends Activity {
 
@@ -90,11 +93,47 @@ public class HomeActivity extends Activity {
         //因为需要去自己定义对话框的展示样式,所以需要调用dialog.setView(view);
         //view是由自己编写的xml转换成的view对象xml----->view
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        AlertDialog dialog = builder.create();
-        View view = View.inflate(this,R.layout.dialog_set_psd,null);
+        final AlertDialog dialog = builder.create();
+        final View view = View.inflate(this,R.layout.dialog_set_psd,null);//在内部类使用加final
         //让对话框显示一个自己定义的对话框界面效果
         dialog.setView(view);
         dialog.show();
+
+        Button bt_safe_submmit  = (Button) view.findViewById(R.id.bt_safe_submmit);
+        Button bt_safe_cancel  = (Button) view.findViewById(R.id.bt_safe_cancel);
+        bt_safe_submmit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EditText et_set_pwd = (EditText) view.findViewById(R.id.et_set_pwd);
+                EditText et_confirm_pwd = (EditText) view.findViewById(R.id.et_confirm_pwd);
+
+                String pwd = et_set_pwd.getText().toString();
+                String confirmPsd = et_confirm_pwd.getText().toString();
+
+                if ( !TextUtils.isEmpty(pwd) &&!TextUtils.isEmpty(confirmPsd)) {
+                    if (pwd.equals(confirmPsd)) {
+                        //进入应用手机防盗模块,开启一个新的activity
+                         Intent intent =   new Intent(getApplicationContext(),TestActivity.class);
+                        startActivity(intent);
+                        //跳转到新的界面以后需要去隐藏对话框
+                        dialog.dismiss();
+
+                    } else {
+                        ToastUtil.show(getApplicationContext(),"确认密码错误");
+                    }
+                } else {
+                    //提示用户密码输入有为空的情况
+                    ToastUtil.show(getApplicationContext(),"请输入密码");
+                }
+            }
+        });
+
+        bt_safe_cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
     }
 
 
