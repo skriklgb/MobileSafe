@@ -93,7 +93,9 @@ public class HomeActivity extends Activity {
         final AlertDialog dialog = builder.create();
         final View view = View.inflate(this,R.layout.dialog_confirm_psd,null);//在内部类使用加final
         //让对话框显示一个自己定义的对话框界面效果
-        dialog.setView(view);
+//        dialog.setView(view);
+        //为了兼容低版本,给对话框设置布局的时候,让其没有内边距(android系统默认提供出来的)
+        dialog.setView(view,0,0,0,0);
         dialog.show();
 
         Button bt_safe_submmit  = (Button) view.findViewById(R.id.bt_safe_submmit);
@@ -141,7 +143,8 @@ public class HomeActivity extends Activity {
         final AlertDialog dialog = builder.create();
         final View view = View.inflate(this,R.layout.dialog_set_psd,null);//在内部类使用加final
         //让对话框显示一个自己定义的对话框界面效果
-        dialog.setView(view);
+//        dialog.setView(view);
+        dialog.setView(view,0,0,0,0);
         dialog.show();
 
         Button bt_safe_submmit  = (Button) view.findViewById(R.id.bt_safe_submmit);
