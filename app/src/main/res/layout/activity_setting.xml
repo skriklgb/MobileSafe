@@ -22,14 +22,6 @@
     mobilesafe:desoff = "自动更新已关闭">
 </skrik.lgb.mobilesafe.view.SettingItemView>
 
-    <skrik.lgb.mobilesafe.view.SettingItemView
-        xmlns:mobilesafe="http://schemas.android.com/apk/res/skrik.lgb.mobilesafe"
-        android:id="@+id/siv_address"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        mobilesafe:destitle="电话归属地的显示设置"
-        mobilesafe:desoff="归属地的显示已关闭"
-        mobilesafe:deson="归属地的显示已开启">
-    </skrik.lgb.mobilesafe.view.SettingItemView>
+
 
 </LinearLayout>

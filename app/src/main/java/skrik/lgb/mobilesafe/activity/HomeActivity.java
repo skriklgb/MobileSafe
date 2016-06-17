@@ -1,8 +1,10 @@
 package skrik.lgb.mobilesafe.activity;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -12,6 +14,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import skrik.lgb.mobilesafe.R;
+import skrik.lgb.mobilesafe.utils.ConstantValue;
+import skrik.lgb.mobilesafe.utils.SpUtil;
 
 public class HomeActivity extends Activity {
 
@@ -49,6 +53,8 @@ public class HomeActivity extends Activity {
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                switch (position){
                     case 0:
+                        //开启对话框
+                        showDialog();
                         break;
                     case 8:
                        //开启通信卫士模块
@@ -59,6 +65,36 @@ public class HomeActivity extends Activity {
                     } 
             }
         });
+    }
+
+    protected void showDialog() {
+        //判断本地是否有存储密码(sp	字符串)
+       String psd = SpUtil.getString(this, ConstantValue.MOBLIE_SAFE_KEY,null);
+        if (TextUtils.isEmpty(psd)) {
+            //1,初始设置密码对话框
+            showSetPsdDialog();
+        } else {
+            //2,确认密码对话框
+            showConfirmPsdDialog();
+        }
+
+
+
+    }
+
+    private void showConfirmPsdDialog() {
+
+    }
+
+    private void showSetPsdDialog() {
+        //因为需要去自己定义对话框的展示样式,所以需要调用dialog.setView(view);
+        //view是由自己编写的xml转换成的view对象xml----->view
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        AlertDialog dialog = builder.create();
+        View view = View.inflate(this,R.layout.dialog_set_psd,null);
+        //让对话框显示一个自己定义的对话框界面效果
+        dialog.setView(view);
+        dialog.show();
     }
 
 
