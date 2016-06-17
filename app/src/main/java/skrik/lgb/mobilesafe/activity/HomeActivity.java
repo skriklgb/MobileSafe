@@ -17,6 +17,7 @@ import android.widget.TextView;
 
 import skrik.lgb.mobilesafe.R;
 import skrik.lgb.mobilesafe.utils.ConstantValue;
+import skrik.lgb.mobilesafe.utils.Md5Util;
 import skrik.lgb.mobilesafe.utils.SpUtil;
 import skrik.lgb.mobilesafe.utils.ToastUtil;
 
@@ -104,9 +105,10 @@ public class HomeActivity extends Activity {
 
                 String confirmPsd = et_confirm_pwd.getText().toString();
 
-                if ( !TextUtils.isEmpty(confirmPsd)) {
+                if ( !TextUtils.isEmpty(Md5Util.encoder(confirmPsd))) {
+                    //将存储在sp中32位的密码,获取出来,然后将输入的密码同样进行md5,然后与sp中存储密码比对
                  String pwd =   SpUtil.getString(getApplicationContext(),ConstantValue.MOBILE_SAFE_PSD,"");
-                    if (pwd.equals(confirmPsd)) {
+                    if (pwd.equals(Md5Util.encoder(confirmPsd))) {
                         //进入应用手机防盗模块,开启一个新的activity
                         Intent intent =   new Intent(getApplicationContext(),TestActivity.class);
                         startActivity(intent);
@@ -161,7 +163,7 @@ public class HomeActivity extends Activity {
                         //跳转到新的界面以后需要去隐藏对话框
                         dialog.dismiss();
 
-                        SpUtil.putString(getApplicationContext(),ConstantValue.MOBILE_SAFE_PSD,pwd);
+                        SpUtil.putString(getApplicationContext(),ConstantValue.MOBILE_SAFE_PSD, Md5Util.encoder(pwd));
 
                     } else {
                         ToastUtil.show(getApplicationContext(),"确认密码错误");
