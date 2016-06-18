@@ -7,9 +7,48 @@
     android:orientation="vertical"
     tools:context="skrik.lgb.mobilesafe.activity.Setup1Activity">
 
+   <TextView
+       style="@style/TitleStyle"
+       android:text="1欢迎使用手机防盗"/>
+
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="这是设置界面1"/>
+        android:text="您的手机防盗卫士:"
+        android:textSize="18sp"
+        android:textColor="@color/black"
+        android:layout_margin="5dp"/>
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="sim卡变更报警"
+        android:textSize="18sp"
+        android:textColor="@color/black"
+        android:gravity="center_vertical"
+        android:drawableLeft="@android:drawable/star_big_on"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="GPS追踪"
+        android:textSize="18sp"
+        android:textColor="@color/black"
+        android:gravity="center_vertical"
+        android:drawableLeft="@android:drawable/star_big_on"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="远程数据销毁"
+        android:textSize="18sp"
+        android:textColor="@color/black"
+        android:gravity="center_vertical"
+        android:drawableLeft="@android:drawable/star_big_on"/>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="远程锁屏"
+        android:textSize="18sp"
+        android:textColor="@color/black"
+        android:gravity="center_vertical"
+        android:drawableLeft="@android:drawable/star_big_on"/>
 </LinearLayout>
