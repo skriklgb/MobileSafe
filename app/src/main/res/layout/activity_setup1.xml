@@ -51,4 +51,45 @@
         android:textColor="@color/black"
         android:gravity="center_vertical"
         android:drawableLeft="@android:drawable/star_big_on"/>
+     <!-- 让内部点的控件水平居中 -->
+       <LinearLayout
+           android:gravity="center_horizontal"
+           android:layout_width="match_parent"
+           android:layout_height="wrap_content">
+        <ImageView
+            android:background="@android:drawable/presence_online"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <ImageView
+            android:background="@android:drawable/presence_invisible"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <ImageView
+            android:background="@android:drawable/presence_invisible"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+        <ImageView
+            android:background="@android:drawable/presence_invisible"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"/>
+       </LinearLayout>
+       <RelativeLayout
+           android:layout_width="match_parent"
+           android:layout_height="match_parent">
+
+           <ImageView
+               android:layout_centerInParent="true"
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:background="@drawable/setup1"/>
+        <!-- 图片选择器,在选中和未选中的过程中,切换展示图片 -->
+           <Button
+               android:layout_width="wrap_content"
+               android:layout_height="wrap_content"
+               android:text="下一页"
+               android:drawableRight="@drawable/next"
+               android:layout_alignParentBottom="true"
+               android:layout_alignParentRight="true"
+               android:background="@drawable/selector_next_btn_bg"/>
+       </RelativeLayout>
 </LinearLayout>
