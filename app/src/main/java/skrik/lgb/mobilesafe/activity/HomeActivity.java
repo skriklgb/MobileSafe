@@ -112,7 +112,7 @@ public class HomeActivity extends Activity {
                  String pwd =   SpUtil.getString(getApplicationContext(),ConstantValue.MOBILE_SAFE_PSD,"");
                     if (pwd.equals(Md5Util.encoder(confirmPsd))) {
                         //进入应用手机防盗模块,开启一个新的activity
-                        Intent intent =   new Intent(getApplicationContext(),TestActivity.class);
+                        Intent intent =   new Intent(getApplicationContext(),SetupOverActivity.class);
                         startActivity(intent);
                         //跳转到新的界面以后需要去隐藏对话框
                         dialog.dismiss();
@@ -161,7 +161,7 @@ public class HomeActivity extends Activity {
                 if ( !TextUtils.isEmpty(pwd) &&!TextUtils.isEmpty(confirmPsd)) {
                     if (pwd.equals(confirmPsd)) {
                         //进入应用手机防盗模块,开启一个新的activity
-                         Intent intent =   new Intent(getApplicationContext(),TestActivity.class);
+                         Intent intent =   new Intent(getApplicationContext(),SetupOverActivity.class);
                         startActivity(intent);
                         //跳转到新的界面以后需要去隐藏对话框
                         dialog.dismiss();
