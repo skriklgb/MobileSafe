@@ -28,6 +28,10 @@
         </activity>
         <activity android:name=".activity.Setup2Activity">
         </activity>
+        <activity android:name=".activity.Setup3Activity">
+        </activity>
+        <activity android:name=".activity.Setup4Activity">
+        </activity>
     </application>
 
 </manifest>
