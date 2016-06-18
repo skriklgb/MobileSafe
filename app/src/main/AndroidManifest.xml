@@ -22,11 +22,11 @@
         </activity>
         <activity android:name=".activity.SettingActivity">
         </activity>
-        <activity android:name=".activity.TestActivity">
-        </activity>
         <activity android:name=".activity.SetupOverActivity">
         </activity>
         <activity android:name=".activity.Setup1Activity">
+        </activity>
+        <activity android:name=".activity.Setup2Activity">
         </activity>
     </application>
 
