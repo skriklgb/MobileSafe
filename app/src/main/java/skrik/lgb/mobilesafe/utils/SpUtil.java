@@ -64,4 +64,11 @@ public class SpUtil {
         }
         return sp.getString(key, defValue);
     }
+
+    public static void remove(Context ctx, String key) {
+        if (sp == null){
+            sp = ctx.getSharedPreferences("config", Context.MODE_PRIVATE);
+        }
+        sp.edit().remove(key).commit();
+    }
 }
