@@ -33,6 +33,8 @@
         </activity>
         <activity android:name=".activity.Setup4Activity">
         </activity>
+        <activity android:name=".activity.ContactListActivity">
+        </activity>
     </application>
 
 </manifest>
