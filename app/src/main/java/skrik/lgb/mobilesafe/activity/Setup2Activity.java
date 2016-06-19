@@ -11,6 +11,7 @@ import android.view.View;
 import skrik.lgb.mobilesafe.R;
 import skrik.lgb.mobilesafe.utils.ConstantValue;
 import skrik.lgb.mobilesafe.utils.SpUtil;
+import skrik.lgb.mobilesafe.utils.ToastUtil;
 import skrik.lgb.mobilesafe.view.SettingItemView;
 
 public class Setup2Activity extends Activity {
@@ -60,10 +61,16 @@ public class Setup2Activity extends Activity {
     }
 
     public void  nextPage(View view){
-        Intent intent = new Intent(getApplicationContext(), Setup3Activity.class);
-        startActivity(intent);
+       String simSerialNumber = SpUtil.getString(this,ConstantValue.SIM_NUMBER,"");
+        if (!TextUtils.isEmpty(simSerialNumber)) {
+            Intent intent = new Intent(getApplicationContext(), Setup3Activity.class);
+            startActivity(intent);
 
-        finish();
+            finish();
+        } else {
+            ToastUtil.show(this,"请绑定SIM卡");
+        }
+
     }
 
     public void  prePage(View view){
