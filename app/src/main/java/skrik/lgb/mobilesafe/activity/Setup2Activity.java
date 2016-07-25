@@ -44,16 +44,17 @@ public class Setup2Activity extends Activity {
                    boolean isCheck =  mSiv_sim_bunnd.isCheck();
                 //4,将原有状态取反并将状态设置给当前条目
                 mSiv_sim_bunnd.setCheck(!isCheck);
+                //5.判断状态
                 if (!isCheck) {
-                    //5,存储(序列卡号)
-                             //5.1获取sim卡序列号TelephoneManager
+                    //6,存储(序列卡号)
+                             //6.1获取sim卡序列号TelephoneManager
                              TelephonyManager manager = (TelephonyManager) getSystemService(Context.TELEPHONY_SERVICE);
-                            //5.2获取sim卡的序列卡号
+                            //6.2获取sim卡的序列卡号
                               String simSerialNumber = manager.getSimSerialNumber();
-                             //5.3存储
+                             //6.3存储
                             SpUtil.putString(getApplicationContext(),ConstantValue.SIM_NUMBER,simSerialNumber);
                 } else {
-                    //6,将存储序列卡号的节点,从sp中删除掉
+                    //7,将存储序列卡号的节点,从sp中删除掉
                     SpUtil.remove(getApplicationContext(),ConstantValue.SIM_NUMBER);
                 }
             }
