@@ -39,8 +39,15 @@ public class ContactListActivity extends Activity {
 //                3.循环游标，直到没有数据为止
                 while (cursor.moveToNext()){
                     String id = cursor.getString(0);
-                    Log.d("读取联系人信息","id ="+id);
-
+//                    Log.d("读取联系人信息","id ="+id);
+                    //4,根据用户唯一性id值,查询data表和mimetype表生成的视图,获取data以及mimetype字段
+                    Cursor indexcursor = contentResolver.query(Uri.parse("content://com.android.contacts/data"), new String[]{"data1", "mimetype"}, "raw_contact_id = ?", new String[]{id}, null);
+                    //5,循环获取每一个联系人的电话号码以及姓名,数据类型
+                    while (indexcursor.moveToNext()){
+                        Log.i("循环获取每一个联系人的电话号码以及姓名数据类型","data = "+indexcursor.getString(0));
+                        Log.i("循环获取每一个联系人的电话号码以及姓名数据类型","mimetype = "+indexcursor.getString(1));
+                    }
+                    indexcursor.close();
                 }
                 cursor.close();
             }
