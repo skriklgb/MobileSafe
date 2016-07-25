@@ -29,7 +29,7 @@
     <skrik.lgb.mobilesafe.view.FocusTextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="秋天秋天悄悄过去,留下小秘密,啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊啊"
+        android:text="splash模块;主界面;设置中心-SettingItemView自定义组合控件，"
         android:textColor="@color/black"
         android:singleLine="true"
         android:padding="5dp"
@@ -44,7 +44,7 @@
         android:layout_width="match_parent"
         android:id="@+id/gv_home"
         android:numColumns="3"
-        android:verticalSpacing="30dp"
+        android:verticalSpacing="60dp"
         android:layout_height="match_parent"></GridView>
 
 </LinearLayout>

@@ -1,6 +1,7 @@
 package skrik.lgb.mobilesafe.activity;
 
 import android.app.Activity;
+import android.content.ContentResolver;
 import android.os.Bundle;
 import android.widget.ListView;
 
@@ -24,7 +25,7 @@ public class ContactListActivity extends Activity {
      * 获取系统联系人数据方法
      */
     private void initData() {
-
+        ContentResolver contentResolver = getContentResolver();
 
     }
 

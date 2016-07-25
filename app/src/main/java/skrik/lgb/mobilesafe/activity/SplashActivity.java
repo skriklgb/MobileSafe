@@ -195,7 +195,7 @@ public class SplashActivity extends Activity {
         intent.setDataAndType(Uri.fromFile(file), "application/vnd.android.package-archive");
 //        startActivity(intent);
 //        finish();
-        startActivityForResult(intent,0);  //设置点击取消，返回主界面，系统默认是退出程序
+         startActivityForResult(intent,0);  //设置点击取消，返回主界面，系统默认是退出程序
 
     }
 
@@ -274,6 +274,7 @@ public class SplashActivity extends Activity {
      * 检测服务器端app的版本，拉取网络，在子线程中实现
      */
     private void checkVersion() {
+
         new Thread(){
             @Override
             public void run() {
@@ -284,7 +285,7 @@ public class SplashActivity extends Activity {
                 long startTime = System.currentTimeMillis();
                 try {
                     //1,封装url地址
-                       URL url = new URL("http://192.168.1.200:8080/update.json");
+                       URL url = new URL("http://liuguangbin.com/update.json");
                     //2,开启一个链接
                         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
                     //3,设置常见请求参数(请求头)
@@ -323,6 +324,7 @@ public class SplashActivity extends Activity {
                         }
 
                     }
+
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
                     msg.what = URL_ERROR;
@@ -379,10 +381,10 @@ public class SplashActivity extends Activity {
 
     /**
      * 获取版本名称: gradle文件中
-     * @return 当前应用的版本名称    返回null代表异常
+     * @return 返回当前应用的版本名称    返回null代表异常
      */
     private String getVersionName() {
-        //1,包管理者对象packageManager
+        //1,获取包管理者对象packageManager
         PackageManager pm = getPackageManager();
         //2,从包的管理者对象中,获取指定包名的基本信息(版本名称,版本号),传0代表获取基本信息
         try {

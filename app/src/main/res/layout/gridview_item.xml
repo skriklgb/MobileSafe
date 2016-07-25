@@ -7,14 +7,15 @@
     <ImageView
         android:id="@+id/iv_icon"
         android:background="@drawable/home_apps"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"/>
+        android:layout_width="80dp"
+        android:layout_height="80dp"/>
 
     <TextView
         android:id="@+id/tv_title"
         android:textSize="18sp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textColor="#333"
         android:text="模块标题"
         />
 
