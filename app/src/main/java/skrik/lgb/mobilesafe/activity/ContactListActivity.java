@@ -2,6 +2,7 @@ package skrik.lgb.mobilesafe.activity;
 
 import android.app.Activity;
 import android.content.ContentResolver;
+import android.content.Intent;
 import android.database.Cursor;
 import android.os.Bundle;
 import android.os.Handler;
@@ -9,6 +10,7 @@ import android.os.Message;
 import android.provider.ContactsContract;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -23,18 +25,19 @@ public class ContactListActivity extends Activity {
 
     private ListView mLv_contact;
     private List<HashMap<String,String>> contactlist = new ArrayList<HashMap<String,String>>();
+    private ContactAdapter mContactAdapter;
     private Handler mhandler = new Handler(){
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
             //8,填充数据适配器
-            ContactAdapter contactAdapter = new ContactAdapter();
-            mLv_contact.setAdapter(contactAdapter);
+            mContactAdapter = new ContactAdapter();
+            mLv_contact.setAdapter(mContactAdapter);
 
 
         }
     };
-
+    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,6 +85,25 @@ public class ContactListActivity extends Activity {
 
     private void initUI() {
         mLv_contact = (ListView) findViewById(R.id.lv_contact);
+        mLv_contact.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                //1,获取点中条目的索引指向集合中的对象
+                if (mContactAdapter != null) {
+                    HashMap<String, String> hashMap = mContactAdapter.getItem(position);
+                    //2,获取当前条目指向集合对应的电话号码
+
+                    //3,此电话号码需要给第三个导航界面使用
+                    String phone = hashMap.get("phone");
+                    //4,在结束此界面回到前一个导航界面的时候,需要将数据返回过去
+                    Intent intent = new Intent();
+                    intent.putExtra("phone",phone);
+                    setResult(0,intent);
+
+                    finish();
+                }
+            }
+        });
     }
 
 

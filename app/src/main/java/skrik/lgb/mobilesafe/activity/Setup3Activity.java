@@ -38,7 +38,14 @@ public class Setup3Activity extends Activity {
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        //1,返回到当前界面的时候,接受结果的方法
+        if (data != null){
+            //1,返回到当前界面的时候,接受结果的方法
+            String phone = data.getStringExtra("phone");
+            //2,将特殊字符过滤(中划线转换成空字符串)
+            phone = phone.replace("-", "").replace(" ","").trim();
+            mEt_phone_num.setText(phone);
+        }
+
         super.onActivityResult(requestCode, resultCode, data);
     }
 
