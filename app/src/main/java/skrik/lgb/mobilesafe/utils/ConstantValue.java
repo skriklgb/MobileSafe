@@ -22,4 +22,8 @@ public class ConstantValue {
      * 存储被选择的联系人的号码的key
      */
     public static final String CONTACT_PHONE ="contact_phone" ;
+    /**
+     * 选中联系人对应的key
+     */
+    public static final String OPEN_SECURITY ="open_security" ;
 }
