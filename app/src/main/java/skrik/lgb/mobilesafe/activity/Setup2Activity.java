@@ -1,6 +1,5 @@
 package skrik.lgb.mobilesafe.activity;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,7 +13,7 @@ import skrik.lgb.mobilesafe.utils.SpUtil;
 import skrik.lgb.mobilesafe.utils.ToastUtil;
 import skrik.lgb.mobilesafe.view.SettingItemView;
 
-public class Setup2Activity extends Activity {
+public class Setup2Activity extends BaseSetupActivity {
 
     private SettingItemView mSiv_sim_bunnd;
 
@@ -25,6 +24,8 @@ public class Setup2Activity extends Activity {
 
         initUI();
     }
+
+
 
     private void initUI() {
         mSiv_sim_bunnd = (SettingItemView) findViewById(R.id.siv_sim_bunnd);
@@ -62,8 +63,10 @@ public class Setup2Activity extends Activity {
 
     }
 
-    public void  nextPage(View view){
-       String simSerialNumber = SpUtil.getString(this,ConstantValue.SIM_NUMBER,"");
+
+    @Override
+    protected void showNextPage() {
+        String simSerialNumber = SpUtil.getString(this,ConstantValue.SIM_NUMBER,"");
         if (!TextUtils.isEmpty(simSerialNumber)) {
             Intent intent = new Intent(getApplicationContext(), Setup3Activity.class);
             startActivity(intent);
@@ -73,14 +76,15 @@ public class Setup2Activity extends Activity {
         } else {
             ToastUtil.show(this,"请绑定SIM卡");
         }
-
     }
 
-    public void  prePage(View view){
+    @Override
+    protected void showPrePage() {
         Intent intent = new Intent(getApplicationContext(), Setup1Activity.class);
         startActivity(intent);
 
         finish();
         overridePendingTransition(R.anim.pre_in_anim,R.anim.pre_out_anim);
     }
+
 }

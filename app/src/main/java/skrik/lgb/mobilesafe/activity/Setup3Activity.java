@@ -1,6 +1,5 @@
 package skrik.lgb.mobilesafe.activity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -13,7 +12,7 @@ import skrik.lgb.mobilesafe.utils.ConstantValue;
 import skrik.lgb.mobilesafe.utils.SpUtil;
 import skrik.lgb.mobilesafe.utils.ToastUtil;
 
-public class Setup3Activity extends Activity {
+public class Setup3Activity extends BaseSetupActivity {
 
     private EditText mEt_phone_num;
     private Button mBt_select_num;
@@ -25,6 +24,8 @@ public class Setup3Activity extends Activity {
 
         initUI();
     }
+
+
 
     private void initUI() {
         //显示电话号码的输入框
@@ -59,12 +60,14 @@ public class Setup3Activity extends Activity {
         super.onActivityResult(requestCode, resultCode, data);
     }
 
-    public void  nextPage(View view){
+
+    @Override
+    protected void showNextPage() {
         //点击按钮以后,需要获取输入框中的联系人,再做下一页操作
         String phone = mEt_phone_num.getText().toString();
 
         //在sp存储了相关联系人以后才可以跳转到下一个界面
-//        String contact_phone = SpUtil.getString(getApplicationContext(), ConstantValue.CONTACT_PHONE, "");
+        //        String contact_phone = SpUtil.getString(getApplicationContext(), ConstantValue.CONTACT_PHONE, "");
         if (!TextUtils.isEmpty(phone)){
             Intent intent = new Intent(getApplicationContext(), Setup4Activity.class);
             startActivity(intent);
@@ -77,14 +80,17 @@ public class Setup3Activity extends Activity {
         } else{
             ToastUtil.show(this,"请输入电话号码");
         }
-
     }
 
-    public void  prePage(View view){
+    @Override
+    protected void showPrePage() {
         Intent intent = new Intent(getApplicationContext(), Setup2Activity.class);
         startActivity(intent);
 
         finish();
         overridePendingTransition(R.anim.pre_in_anim,R.anim.pre_out_anim);
     }
+
+
+
 }

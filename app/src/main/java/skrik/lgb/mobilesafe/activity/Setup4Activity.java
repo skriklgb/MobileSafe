@@ -1,9 +1,7 @@
 package skrik.lgb.mobilesafe.activity;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.CheckBox;
 import android.widget.CompoundButton;
 
@@ -12,7 +10,7 @@ import skrik.lgb.mobilesafe.utils.ConstantValue;
 import skrik.lgb.mobilesafe.utils.SpUtil;
 import skrik.lgb.mobilesafe.utils.ToastUtil;
 
-public class Setup4Activity extends Activity {
+public class Setup4Activity extends BaseSetupActivity {
 
     private CheckBox mCb_box;
 
@@ -23,6 +21,8 @@ public class Setup4Activity extends Activity {
 
         initUI();
     }
+
+
 
     private void initUI() {
         mCb_box = (CheckBox) findViewById(R.id.cb_box);
@@ -53,7 +53,9 @@ public class Setup4Activity extends Activity {
 
     }
 
-    public void  nextPage(View view){
+
+    @Override
+    protected void showNextPage() {
         boolean open_security = SpUtil.getBoolean(this, ConstantValue.OPEN_SECURITY, false);
         if (open_security){
             Intent intent = new Intent(getApplicationContext(), SetupOverActivity.class);
@@ -65,10 +67,10 @@ public class Setup4Activity extends Activity {
         }else {
             ToastUtil.show(getApplicationContext(),"请开启防盗保护");
         }
-
     }
 
-    public void  prePage(View view){
+    @Override
+    protected void showPrePage() {
         Intent intent = new Intent(getApplicationContext(), Setup3Activity.class);
         startActivity(intent);
 
