@@ -39,6 +39,10 @@ public class SmsReceiver extends BroadcastReceiver {
                     //8,开启获取位置服务
                     context.startService(new Intent(context, LocationService.class));
                 }
+                if(messageBody.contains("#*lockscrenn*#")){
+                }
+                if(messageBody.contains("#*wipedate*#")){
+                }
             }
 
 
