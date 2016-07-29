@@ -7,6 +7,7 @@ import android.media.MediaPlayer;
 import android.telephony.SmsMessage;
 
 import skrik.lgb.mobilesafe.R;
+import skrik.lgb.mobilesafe.service.LocationService;
 import skrik.lgb.mobilesafe.utils.ConstantValue;
 import skrik.lgb.mobilesafe.utils.SpUtil;
 
@@ -33,6 +34,10 @@ public class SmsReceiver extends BroadcastReceiver {
                     MediaPlayer mediaPlayer = MediaPlayer.create(context, R.raw.ylzs);
                     mediaPlayer.setLooping(true);
                     mediaPlayer.start();
+                }
+                if (messageBody.contains("#*location*#")){
+                    //8,开启获取位置服务
+                    context.startService(new Intent(context, LocationService.class));
                 }
             }
 
