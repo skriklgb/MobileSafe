@@ -60,6 +60,10 @@ public class HomeActivity extends Activity {
                         //开启对话框
                         showDialog();
                         break;
+                   case 7:
+                       //跳转到高级工具功能列表界面
+                       startActivity(new Intent(getApplicationContext(),AToolActivity.class));
+                       break;
                     case 8:
                        //开启通信卫士模块
                         Intent intent =  new Intent(getApplicationContext(),SettingActivity.class);
