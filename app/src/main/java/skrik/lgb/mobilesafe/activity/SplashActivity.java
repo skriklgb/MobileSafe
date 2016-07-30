@@ -26,6 +26,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.HttpURLConnection;
@@ -225,6 +226,53 @@ public class SplashActivity extends Activity {
         initUI();  //初始化UI
         initData();//初始化数据
         initAnimation();//初始化动画
+
+        //初始化数据库
+        initDB();
+
+    }
+
+    private void initDB() {
+        //1,归属地数据拷贝过程
+        initAddressDB("address.db");
+    }
+
+    /**
+     * 拷贝数据库值files文件夹下
+     * @param dbName	数据库名称
+     */
+    private void initAddressDB(String dbName) {
+        //1,在files文件夹下创建同名dbName数据库文件过程
+        File filesDir = getFilesDir();
+        File file = new File(filesDir, dbName);//getFilesDir()方法用于获取/data/data//files目录
+        if (file.exists()){
+            return;
+        }
+        //2,输入流读取第三方资产目录下的文件
+        InputStream stream = null;
+        FileOutputStream fos = null;
+        try {
+            stream = getAssets().open(dbName);
+            //3,将读取的内容写入到指定文件夹的文件中去
+            fos = new FileOutputStream(file);
+            //4,每次的读取内容大小
+            byte[] bytes = new byte[1024];
+            int temp =-1;
+            while ((temp = stream.read(bytes)) != -1){
+                fos.write(bytes,0,temp);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }finally {
+            if (stream != null && fos!=null){
+                try {
+                    stream.close();
+                    fos.close();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
 
     }
 
