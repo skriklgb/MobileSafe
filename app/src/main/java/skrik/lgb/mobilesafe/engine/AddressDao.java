@@ -21,6 +21,14 @@ public class AddressDao {
         if (cursor.moveToNext()){
             String outkey = cursor.getString(0);
             Log.i(tag, "outkey = "+outkey);
+            //5,通过data1查询到的结果,作为外键查询data2
+            Cursor indexCursor = db.query("data2", new String[]{"location"}, "id=?", new String[]{outkey}, null, null, null);
+            if (indexCursor.moveToNext()){
+                //6,获取查询到的电话归属地
+                String address = indexCursor.getString(0);
+                Log.i(tag,"address ="+address);
+            }
+
         }
 
 

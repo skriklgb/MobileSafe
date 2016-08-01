@@ -13,6 +13,6 @@ public class QueryAddressActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_query_address);
 
-        AddressDao.getAddress("1300000");
+        AddressDao.getAddress("110");
     }
 }
